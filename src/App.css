@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -34,5 +34,18 @@
   }
   to {
     transform: rotate(360deg);
+  }
+} */
+
+/* For mobile screens */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
   }
 }
