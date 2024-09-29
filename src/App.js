@@ -3,9 +3,6 @@ import './App.css';
 import ReceivingInterface from './components/receivingInterface';
 import DesktopFishTesting from './components/desktopInterface';
 
-
-
-
 const App = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
