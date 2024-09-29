@@ -1,15 +1,30 @@
-import logo from './logo.svg';
-import React, { useState } from 'react'; 
-import ReceivingInterface from './components/receivingInterface';
+import React, { useState, useEffect} from 'react'; 
 import './App.css';
+import ReceivingInterface from './components/receivingInterface';
+import DesktopFishTesting from './components/desktopInterface';
 
-function App() {
+
+
+
+const App = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <div className='App'>
-      <ReceivingInterface />
+    <div>
+      {isMobile ? <ReceivingInterface /> : <DesktopFishTesting />}
     </div>
-   );
- 
-}
+  );
+};
+
 
 export default App;
