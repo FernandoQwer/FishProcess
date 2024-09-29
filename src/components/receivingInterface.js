@@ -1,5 +1,6 @@
 import React from 'react';
 import FishTrackForm from './FishTrackForm';
+// import OnScreenNumberPad from './OnScreenNumberPad';
 
 
 
@@ -12,6 +13,7 @@ function ReceivingInterface() {
 
       <FishTrackForm />
 
+      {/* <OnScreenNumberPad /> */}
     </div>
   );
 

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import OnScreenNumberPad from './OnScreenNumberPad';
+
 const FishTrackForm = () => {
   const [formData, setFormData] = useState({
     fishType: '',
@@ -10,14 +12,31 @@ const FishTrackForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [activeField, setActiveField] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, 
-        [name]: name === 'weight' || name === 'damageWeight'
+  const handleChange = (newValue, fieldName = null) => {
+    let name, value;
+  
+    if (typeof newValue === 'object' && newValue.target) {
+      ({ name, value } = newValue.target);
+    } else {
+      name = fieldName;
+      value = formData[fieldName] + newValue; 
+    }
+  
+   
+    setFormData({
+      ...formData,
+      [name]: name === 'weight' || name === 'damageWeight'
         ? value === '' ? '' : parseFloat(value)
         : value,
     });
+  };
+
+  const handleInput = (value) => {
+    if (activeField) {
+      handleChange(value, activeField);
+    }
   };
 
   const validateForm = () => {
@@ -112,14 +131,16 @@ const FishTrackForm = () => {
 
         <div className="mb-3">
             <label className="form-label mb-2">Weight:</label>
-            <input type="number" className="form-control" name="weight" value={formData.weight} onChange={handleChange} />
+            <input type="number" className="form-control" name="weight" value={formData.weight} onChange={handleChange} readOnly
+          onClick={() => setActiveField('weight')} />
     
             {errors.weight && <span style={{ color: 'red' }}>{errors.weight}</span>}
         </div>
 
         <div className="mb-3">
           <label className="form-label mb-2">Damage Weight:</label>
-          <input type="number" className="form-control" name="damageWeight" value={formData.damageWeight} onChange={handleChange} />
+          <input type="number" className="form-control" name="damageWeight" value={formData.damageWeight} onChange={handleChange} readOnly
+          onClick={() => setActiveField('damageWeight')} />
 
           {errors.damageWeight && <span style={{ color: 'red' }}>{errors.damageWeight}</span>}
         </div>
@@ -127,6 +148,8 @@ const FishTrackForm = () => {
         <div>
             <button type="submit" className="btn btn-primary">Submit</button>
         </div>
+
+        <OnScreenNumberPad handleInput={handleInput} />
     </form>
   );
 };
